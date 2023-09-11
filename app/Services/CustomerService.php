@@ -49,4 +49,14 @@ class CustomerService implements ICustomerService
             return ['success' => false, 'msg' => 'Dados inválidos.'];
         }
     }
+
+    public function test()
+    {
+        $data = [
+            'message' => 'Esta é uma resposta de teste em JSON!',
+            'status' => 'success',
+        ];
+
+        return $data;
+    }
 }

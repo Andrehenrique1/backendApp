@@ -19,27 +19,37 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Rota para exibir o formulário de login para clientes
 Route::get('login/customers', [CustomerController::class, 'showCustomerLoginForm'])->name('login.customers');
 
-// Rota para processar o login para clientes
-Route::post('login/customers', [CustomerController::class, 'login']);
-
-// Rota para exibir o formulário de registro para clientes
 Route::get('register/customers', [App\Http\Controllers\Auth\RegisterController::class, 'showCustomerRegistrationForm'])->name('register.customers');
 
-// Rota para processar o registro para clientes
-Route::post('register/customers', [CustomerController::class, 'storeOrUpdate']);
-
-// Rota para exibir o formulário de login para prestadores de serviços
 Route::get('login/service-providers', [App\Http\Controllers\Auth\LoginController::class, 'showServiceProviderLoginForm'])->name('login.service-providers');
 
-// Rota para processar o login para prestadores de serviços
-Route::post('login/users', [UserController::class, 'login']);
-
-// Rota para exibir o formulário de registro para prestadores de serviços
-Route::post('register/user', [UserController::class, 'storeOrUpdate']);
-
-// Rota para processar o registro para prestadores de serviços
 Route::post('register/service-providers', [App\Http\Controllers\Auth\RegisterController::class, 'createServiceProvider']);
 
+Route::get('csrf-token', function () {
+    return response()->json(csrf_token());
+});
+
+//LOGIN/REGISTRO DE CLIENTES
+Route::post('register/customers', [CustomerController::class, 'storeOrUpdate']);
+
+Route::post('login/customers', [CustomerController::class, 'login']);
+
+Route::get('check-email', [CustomerController::class, 'checkEmail']);
+
+//LOGIN/REGISTRO DE AUTONOMOS
+Route::post('register/users', [UserController::class, 'storeOrUpdate']);
+
+Route::post('login/users', [UserController::class, 'login']);
+
+Route::get('check-email-user', [UserController::class, 'checkEmail']);
+
+//COMPLETAR CADASTRO
+Route::post('autonomo', [\App\Http\Controllers\Autonomo\AutonomoController::class, 'store']);
+
+Route::get('get-autonomo', [\App\Http\Controllers\Autonomo\AutonomoController::class, 'getAutonomo']);
+
+Route::group(['middleware' => ['web']], function () {
+    // Suas rotas de cliente aqui
+});
