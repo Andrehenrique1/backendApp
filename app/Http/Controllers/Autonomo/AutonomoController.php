@@ -15,8 +15,6 @@ class AutonomoController extends \App\Http\Controllers\Controller
 {
     public function store(Request $request)
     {
-        Log::info($request->all());
-
         $autonomo = new Autonomo();
 
         if ($request->id) {
@@ -40,13 +38,54 @@ class AutonomoController extends \App\Http\Controllers\Controller
 
     }
 
-    public function getAutonomo()
+    public function getAutonomo(Request $request)
     {
-        $autonomos = Autonomo::leftJoin('avaliacao as av', 'autonomo.id', '=', 'av.id_autonomo')
+        // Obtenha os parâmetros da solicitação
+        $profession = $request->input('profession');
+        $name = $request->input('name');
+        $orderBy = $request->input('orderBy');
+
+        // Inicialize a consulta
+        $query = Autonomo::leftJoin('avaliacao as av', 'autonomo.id', '=', 'av.id_autonomo')
             ->select('autonomo.*', DB::raw('AVG(av.avaliacao) as media_avaliacao'))
-            ->groupBy('autonomo.id')
-            ->get();
+            ->groupBy('autonomo.id');
+
+        // Aplicar filtros com base nos parâmetros fornecidos
+        if ($profession) {
+            $query->where('profissao', $profession);
+        }
+
+        if ($name) {
+            $query->where('nome_completo', 'LIKE', '%' . $name . '%');
+        }
+
+        if ($orderBy === 'maior') {
+            $query->orderBy('media_avaliacao', 'desc');
+        } elseif ($orderBy === 'menor') {
+            $query->orderBy('media_avaliacao', 'asc');
+        }
+
+        // Execute a consulta e obtenha os resultados
+        $autonomos = $query->get();
 
         return response()->json($autonomos);
     }
+
+    public function getAutonomoPerfil(Request $request)
+    {
+        $customerId = $request->input('customerId');
+
+        $profileData =  Autonomo::leftJoin('avaliacao as av', 'autonomo.id', '=', 'av.id_autonomo')
+            ->select('autonomo.*', DB::raw('AVG(av.avaliacao) as media_avaliacao'))
+            ->groupBy('autonomo.id')
+            ->where('id_usuario', $customerId)->first();
+
+        if ($profileData) {
+            return response()->json($profileData);
+        } else {
+            return response()->json(['error' => 'Profile data not found'], 404);
+        }
+    }
+
+
 }

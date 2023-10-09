@@ -50,6 +50,8 @@ Route::post('autonomo', [\App\Http\Controllers\Autonomo\AutonomoController::clas
 
 Route::get('get-autonomo', [\App\Http\Controllers\Autonomo\AutonomoController::class, 'getAutonomo']);
 
+Route::get('get-autonomo-perfil', [\App\Http\Controllers\Autonomo\AutonomoController::class, 'getAutonomoPerfil']);
+
 Route::group(['middleware' => ['web']], function () {
     // Suas rotas de cliente aqui
 });
