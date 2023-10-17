@@ -52,6 +52,9 @@ Route::get('get-autonomo', [\App\Http\Controllers\Autonomo\AutonomoController::c
 
 Route::get('get-autonomo-perfil', [\App\Http\Controllers\Autonomo\AutonomoController::class, 'getAutonomoPerfil']);
 
+//AGENDAMENTO
+Route::post('/agendamentos', [\App\Http\Controllers\Customer\AgendamentoController ::class, 'store']);
+
 Route::group(['middleware' => ['web']], function () {
     // Suas rotas de cliente aqui
 });

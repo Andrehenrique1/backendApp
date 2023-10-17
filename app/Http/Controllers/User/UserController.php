@@ -19,7 +19,6 @@ class UserController extends \App\Http\Controllers\Controller
 
     public function storeOrUpdate(Request $request)
     {
-        Log::info($request->all());
 
         // Verifique se o email já existe no banco de dados
         $existingCustomer = User::where('email', $request->email)->first();
@@ -48,11 +47,9 @@ class UserController extends \App\Http\Controllers\Controller
 
     public function login(Request $request)
     {
-        Log::info($request->all());
         $customer = User::query()->where('email', $request->email)->first();
 
         if (!$customer) {
-            Log::info('bateu');
             return response()->json(['success' => false, 'msg' => 'E-mail não encontrado.'], 404);
         }
 

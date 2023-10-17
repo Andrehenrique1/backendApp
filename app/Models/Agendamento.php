@@ -3,17 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Avaliacao extends Model
+class Agendamento extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'avaliacao';
-    use SoftDeletes;
+    protected $table = 'agendamento';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,8 +22,13 @@ class Avaliacao extends Model
         'id',
         'id_cliente',
         'id_autonomo',
-        'avaliacao',
-        'comentario',
+        'data',
+        'horario',
+        'descricao',
+        'status',
+        'servico_finalizado',
+        'deleted_at',
+        'updated_at',
+        'created_at'
     ];
-
 }

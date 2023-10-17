@@ -20,7 +20,7 @@ class Autonomo extends Model
      */
     protected $fillable = [
         'id',
-        'id_usuario',
+        'id_cliente',
         'nome_completo',
         'idade',
         'profissao',
@@ -34,6 +34,6 @@ class Autonomo extends Model
 
     public function Customer()
     {
-        return $this->belongsTo(Customer::class, 'id_usuario');
+        return $this->belongsTo(Customer::class, 'id_cliente');
     }
 }
