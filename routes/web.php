@@ -53,8 +53,15 @@ Route::get('get-autonomo', [\App\Http\Controllers\Autonomo\AutonomoController::c
 Route::get('get-autonomo-perfil', [\App\Http\Controllers\Autonomo\AutonomoController::class, 'getAutonomoPerfil']);
 
 //AGENDAMENTO
-Route::post('agendamentos', [\App\Http\Controllers\Customer\AgendamentoController ::class, 'store']);
+Route::post('agendamentos', [\App\Http\Controllers\Customer\AgendamentoController::class, 'store']);
+Route::post('avaliacao', [\App\Http\Controllers\Customer\AgendamentoController::class, 'avaliar']);
+Route::post('deletar-agendamento/{id}', [\App\Http\Controllers\Customer\AgendamentoController::class, 'deletarServico']);
+Route::post('aceitar/{id}', [\App\Http\Controllers\Customer\AgendamentoController::class, 'aceitarServico']);
+Route::post('concluir/{id}', [\App\Http\Controllers\Customer\AgendamentoController::class, 'concluirServico']);
 Route::get('get-notificacao', [\App\Http\Controllers\Customer\AgendamentoController::class, 'getNotificacao']);
+Route::get('get-meus-servicos', [\App\Http\Controllers\Customer\AgendamentoController::class, 'getMeuServico']);
+
+Route::get('get-meus-pedidos', [\App\Http\Controllers\Customer\AgendamentoController::class, 'getMeuPedido']);
 
 Route::group(['middleware' => ['web']], function () {
     // Suas rotas de cliente aqui

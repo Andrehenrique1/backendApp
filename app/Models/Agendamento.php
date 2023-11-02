@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Agendamento extends Model
 {
+
+    use SoftDeletes;
     /**
      * The table associated with the model.
      *
@@ -31,4 +34,9 @@ class Agendamento extends Model
         'updated_at',
         'created_at'
     ];
+
+    public function Customer()
+    {
+        return $this->belongsTo(Customer::class, 'id');
+    }
 }

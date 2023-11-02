@@ -22,7 +22,7 @@ class CreateTableAvaliacao extends Migration
 
             // Define foreign key constraints
             $table->foreign('id_cliente')->references('id')->on('users');
-            $table->foreign('id_autonomo')->references('id')->on('autonomo');
+            $table->foreign('id_autonomo')->references('id')->on('customers');
 
             $table->timestamps();
         });

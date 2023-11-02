@@ -10,4 +10,14 @@ class Customer extends \Illuminate\Database\Eloquent\Model
      * @var string
      */
     protected $table = 'customers';
+
+    protected $fillable = [
+        'id',
+        'name',
+        'email',
+        'password',
+    ];
+
+
+
 }

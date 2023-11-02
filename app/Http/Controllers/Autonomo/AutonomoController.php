@@ -46,7 +46,9 @@ class AutonomoController extends \App\Http\Controllers\Controller
         $orderBy = $request->input('orderBy');
 
         // Inicialize a consulta
-        $query = Autonomo::leftJoin('avaliacao as av', 'autonomo.id', '=', 'av.id_autonomo')
+        $query = Autonomo::query()
+            ->leftJoin('customers as c', 'autonomo.id_usuario', '=', 'c.id')
+            ->leftJoin('avaliacao as av', 'c.id', '=', 'av.id_autonomo')
             ->select('autonomo.*', DB::raw('AVG(av.avaliacao) as media_avaliacao'))
             ->groupBy('autonomo.id');
 
@@ -67,7 +69,8 @@ class AutonomoController extends \App\Http\Controllers\Controller
 
         // Execute a consulta e obtenha os resultados
         $autonomos = $query->get();
-
+        Log::info('========================================');
+        Log::info($autonomos);
         return response()->json($autonomos);
     }
 

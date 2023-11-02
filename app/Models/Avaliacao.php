@@ -13,7 +13,7 @@ class Avaliacao extends Model
      * @var string
      */
     protected $table = 'avaliacao';
-    use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
